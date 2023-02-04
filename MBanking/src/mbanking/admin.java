@@ -1,0 +1,818 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package mbanking;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author wahyu
+ */
+public class admin extends javax.swing.JFrame {
+    private DefaultTableModel tabmode; 
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+    String sql;
+    query aa = new query();
+    
+    /**
+     * Creates new form admin
+     */
+    public admin() {
+        initComponents();
+        clear();
+        tampilData();
+        Tampil_Jam();
+        btn_edit.setEnabled(false);
+    }
+    
+    public void tampilData(){
+        Object [] baris = {"No. Rekening","Nama","DoB","Alamat","Gender","Username","Password","PIN","Saldo","Tipe Akun"};
+        tabmode = new DefaultTableModel(null, baris);
+        tbl_data.setModel(tabmode);
+        
+        try { 
+                rs = aa.data(); 
+                
+                while (rs.next()){                    
+                    String[] data = {
+                        rs.getString("no_rek"),
+                        rs.getString("nama"),
+                        rs.getString("DoB"),
+                        rs.getString("alamat"),
+                        aa.gender(rs.getString("gender")),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("pin"),
+                        rs.getString("saldo"),
+                        aa.tipeAkun(rs.getString("tipe_akun"))
+                    };
+                    tabmode.addRow(data);
+                }
+        } catch (Exception e) {
+                
+        }
+    }
+    
+    public void pencarianData(){
+        Object [] baris = {"No. Rekening","Nama","DoB","Alamat","Gender","Username","Password","PIN","Saldo","Tipe Akun"};
+        tabmode = new DefaultTableModel(null, baris);
+        tbl_data.setModel(tabmode);
+        
+        try { 
+                rs = aa.cariData(); 
+                
+                while (rs.next()){                    
+                    String[] data = {
+                        rs.getString("no_rek"),
+                        rs.getString("nama"),
+                        rs.getString("DoB"),
+                        rs.getString("alamat"),
+                        aa.gender(rs.getString("gender")),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("pin"),
+                        rs.getString("saldo"),
+                        aa.tipeAkun(rs.getString("tipe_akun"))
+                    };
+                    tabmode.addRow(data);
+                }
+        } catch (Exception e) {
+                
+        }
+    }
+        
+    public void clear(){
+        aa.setNoRek("");
+        
+        txt_DoB.setText("");
+        txt_alamat.setText("");
+        txt_cari.setText("");
+        txt_gender.setSelectedIndex(0);
+        txt_nama.setText("");
+        txt_noRek.setText("");
+        txt_pass.setText("");
+        txt_pin.setText("");
+        txt_tipeAkun.setSelectedIndex(0);
+        txt_user.setText("");
+    }
+    
+    public void Tampil_Jam(){
+        ActionListener taskPerformer = new ActionListener() {
+ 
+        @Override
+            public void actionPerformed(ActionEvent evt) {
+            String nol_jam = "", nol_menit = "",nol_detik = "";
+ 
+            java.util.Date dateTime = new java.util.Date();
+            int nilai_jam = dateTime.getHours();
+            int nilai_menit = dateTime.getMinutes();
+            int nilai_detik = dateTime.getSeconds();
+            
+            java.util.Date tglsekarang = new java.util.Date();
+            SimpleDateFormat smpdtfmt = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String tanggal = smpdtfmt.format(tglsekarang);
+ 
+            if(nilai_jam <= 9) nol_jam= "0";
+            if(nilai_menit <= 9) nol_menit= "0";
+            if(nilai_detik <= 9) nol_detik= "0";
+ 
+            String jam = nol_jam + Integer.toString(nilai_jam);
+            String menit = nol_menit + Integer.toString(nilai_menit);
+            String detik = nol_detik + Integer.toString(nilai_detik);
+ 
+            lbl_date.setText(tanggal);
+            lbl_time.setText(jam + ":" + menit+ ":" + detik);
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbl_date = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_time = new javax.swing.JLabel();
+        jTabbed = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_data = new javax.swing.JTable();
+        txt_cari = new javax.swing.JTextField();
+        lbl_great2 = new javax.swing.JLabel();
+        btn_transaksi1 = new javax.swing.JButton();
+        btn_transaksi2 = new javax.swing.JButton();
+        btn_transaksi3 = new javax.swing.JButton();
+        btn_all = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_great1 = new javax.swing.JLabel();
+        txt_noRek = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txt_nama = new javax.swing.JTextField();
+        txt_alamat = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txt_DoB = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txt_user = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txt_gender = new javax.swing.JComboBox<>();
+        txt_tipeAkun = new javax.swing.JComboBox<>();
+        btn_clear = new javax.swing.JButton();
+        txt_pass = new javax.swing.JPasswordField();
+        btn_edit = new javax.swing.JButton();
+        btn_tambah = new javax.swing.JButton();
+        txt_pin = new javax.swing.JPasswordField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Admin |  Home | Mobile Banking System");
+
+        jPanel1.setBackground(new java.awt.Color(242, 200, 91));
+
+        jLabel1.setFont(new java.awt.Font("Montserrat ExtraBold", 2, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Bank Universitas Riau");
+
+        jLabel2.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Mudah, Aman dan Terpercaya");
+
+        lbl_date.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        lbl_date.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_date.setText("time");
+
+        jLabel3.setFont(new java.awt.Font("Montserrat Medium", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mbanking/img/logOut1.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        lbl_time.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        lbl_time.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_time.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_time.setText("time");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_date)
+                    .addComponent(lbl_time))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(28, 28, 28))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_date)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_time)))
+                .addGap(28, 28, 28))
+        );
+
+        jTabbed.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbl_data.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_data.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_dataMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_data);
+
+        txt_cari.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_cari.setText("jTextField1");
+
+        lbl_great2.setFont(new java.awt.Font("Montserrat ExtraBold", 0, 24)); // NOI18N
+        lbl_great2.setText("Daftar Akun");
+
+        btn_transaksi1.setBackground(new java.awt.Color(242, 200, 91));
+        btn_transaksi1.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_transaksi1.setForeground(new java.awt.Color(255, 255, 255));
+        btn_transaksi1.setText("Cari");
+        btn_transaksi1.setBorder(null);
+        btn_transaksi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_transaksi1ActionPerformed(evt);
+            }
+        });
+
+        btn_transaksi2.setBackground(new java.awt.Color(242, 200, 91));
+        btn_transaksi2.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_transaksi2.setForeground(new java.awt.Color(255, 255, 255));
+        btn_transaksi2.setText("Edit");
+        btn_transaksi2.setBorder(null);
+        btn_transaksi2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_transaksi2ActionPerformed(evt);
+            }
+        });
+
+        btn_transaksi3.setBackground(new java.awt.Color(242, 200, 91));
+        btn_transaksi3.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_transaksi3.setForeground(new java.awt.Color(255, 255, 255));
+        btn_transaksi3.setText("Hapus");
+        btn_transaksi3.setBorder(null);
+        btn_transaksi3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_transaksi3ActionPerformed(evt);
+            }
+        });
+
+        btn_all.setBackground(new java.awt.Color(242, 200, 91));
+        btn_all.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_all.setForeground(new java.awt.Color(255, 255, 255));
+        btn_all.setText("ALL");
+        btn_all.setBorder(null);
+        btn_all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_allActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lbl_great2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txt_cari, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_transaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_all, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 208, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_transaksi3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_transaksi2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(lbl_great2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_cari, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(btn_transaksi1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_all, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(btn_transaksi2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_transaksi3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addGap(297, 297, 297))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(28, 28, 28))))
+        );
+
+        jTabbed.addTab("Daftar Akun", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel4.setText("Nomor Rekening");
+
+        lbl_great1.setFont(new java.awt.Font("Montserrat ExtraBold", 0, 24)); // NOI18N
+        lbl_great1.setText("Tambah Akun");
+
+        txt_noRek.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_noRek.setText("jTextField1");
+
+        jLabel5.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel5.setText("Nama");
+
+        txt_nama.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_nama.setText("jTextField1");
+
+        txt_alamat.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_alamat.setText("jTextField1");
+
+        jLabel6.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel6.setText("Alamat");
+
+        txt_DoB.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_DoB.setText("jTextField1");
+
+        jLabel7.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel7.setText("DoB");
+
+        jLabel8.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel8.setText("Gender");
+
+        jLabel9.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel9.setText("Tipe Akun");
+
+        jLabel11.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel11.setText("PIN Rekening");
+
+        jLabel12.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel12.setText("Password");
+
+        txt_user.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_user.setText("jTextField1");
+
+        jLabel13.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jLabel13.setText("Username");
+
+        txt_gender.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki - Laki", "Perempuan" }));
+
+        txt_tipeAkun.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        txt_tipeAkun.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nasabah" }));
+
+        btn_clear.setBackground(new java.awt.Color(242, 200, 91));
+        btn_clear.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_clear.setForeground(new java.awt.Color(255, 255, 255));
+        btn_clear.setText("Clear");
+        btn_clear.setBorder(null);
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
+
+        txt_pass.setText("jPasswordField1");
+
+        btn_edit.setBackground(new java.awt.Color(242, 200, 91));
+        btn_edit.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_edit.setForeground(new java.awt.Color(255, 255, 255));
+        btn_edit.setText("Edit Akun");
+        btn_edit.setBorder(null);
+        btn_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editActionPerformed(evt);
+            }
+        });
+
+        btn_tambah.setBackground(new java.awt.Color(242, 200, 91));
+        btn_tambah.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        btn_tambah.setForeground(new java.awt.Color(255, 255, 255));
+        btn_tambah.setText("Tambah Akun");
+        btn_tambah.setBorder(null);
+        btn_tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambahActionPerformed(evt);
+            }
+        });
+
+        txt_pin.setText("jPasswordField1");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_great1)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(txt_noRek)
+                    .addComponent(txt_nama)
+                    .addComponent(txt_DoB)
+                    .addComponent(txt_alamat)
+                    .addComponent(txt_gender, 0, 403, Short.MAX_VALUE)
+                    .addComponent(btn_edit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel12)
+                        .addComponent(jLabel13)
+                        .addComponent(txt_user)
+                        .addComponent(txt_tipeAkun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_tambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txt_pin, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(lbl_great1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_noRek, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_DoB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_pin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_tipeAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+
+        jTabbed.addTab("Tambah Akun", jPanel4);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbed)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jTabbed))
+        );
+
+        setSize(new java.awt.Dimension(992, 707));
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        try {
+            new login().setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        // TODO add your handling code here
+        clear();
+        lbl_great1.setText("Tambah Akun");
+        btn_tambah.setEnabled(true);
+        btn_edit.setEnabled(false);
+        txt_noRek.setEnabled(true);
+    }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void btn_transaksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksi1ActionPerformed
+        // TODO add your handling code here:
+        if(txt_cari.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Pencarian Masih Kosong");
+        } else {
+            aa.setCari(txt_cari.getText());
+            pencarianData();
+        }
+    }//GEN-LAST:event_btn_transaksi1ActionPerformed
+
+    private void btn_transaksi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksi2ActionPerformed
+        // TODO add your handling code here:
+        jTabbed.setSelectedIndex(1);
+        lbl_great1.setText("Edit Akun");
+        txt_noRek.setEnabled(false);
+    }//GEN-LAST:event_btn_transaksi2ActionPerformed
+
+    private void btn_transaksi3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksi3ActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "Apakah Anda yakin akan menghapus data ini ?","Warning",2) == JOptionPane.YES_OPTION){
+            aa.deleteAkun();
+            aa.setNoRek(sql);
+            tampilData();
+            clear();
+        } 
+    }//GEN-LAST:event_btn_transaksi3ActionPerformed
+
+    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
+        // TODO add your handling code here:
+        if (txt_DoB.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "DoB Masih Kosong");
+        } else if (txt_alamat.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Alamat Masih Kosong");
+        } else if (txt_nama.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Nama Masih Kosong");
+        } else if (txt_noRek.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Nomor Rekening Masih Kosong");
+        } else if (txt_pass.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Password Masih Kosong");
+        } else if (txt_pin.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "PIN Masih Kosong");
+        } else if (txt_user.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Username Masih Kosong");
+        } else {
+            aa.setNoRek(txt_noRek.getText());
+            aa.setNama(txt_nama.getText());
+            aa.setDoB(txt_DoB.getText());
+            aa.setAlamat(txt_alamat.getText());
+            aa.setGender(txt_gender.getSelectedItem().toString());
+            aa.setUsername(txt_user.getText());
+            aa.setPassword(txt_pass.getText());
+            aa.setPIN(txt_pin.getText());
+            aa.setTP(txt_tipeAkun.getSelectedItem().toString());
+            
+            System.out.println(aa.getGender());            
+            System.out.println(aa.getTP());
+            
+            aa.updateAkun();
+            JOptionPane.showMessageDialog(null, "Edit Data Berhasil", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+            jTabbed.setSelectedIndex(0);
+            tampilData();
+            clear();
+        }
+    }//GEN-LAST:event_btn_editActionPerformed
+
+    private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
+        // TODO add your handling code here:
+        if (txt_DoB.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "DoB Masih Kosong");
+        } else if (txt_alamat.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Alamat Masih Kosong");
+        } else if (txt_nama.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Nama Masih Kosong");
+        } else if (txt_noRek.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Nomor Rekening Masih Kosong");
+        } else if (txt_pass.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Password Masih Kosong");
+        } else if (txt_pin.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "PIN Masih Kosong");
+        } else if (txt_user.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Username Masih Kosong");
+        } else {
+            aa.setNoRek(txt_noRek.getText());
+            aa.setNama(txt_nama.getText());
+            aa.setDoB(txt_DoB.getText());
+            aa.setAlamat(txt_alamat.getText());
+            aa.setGender(txt_gender.getSelectedItem().toString());
+            aa.setUsername(txt_user.getText());
+            aa.setPassword(txt_pass.getText());
+            aa.setPIN(txt_pin.getText());
+            aa.setSaldoT("20000");
+            aa.setTP(txt_tipeAkun.getSelectedItem().toString());
+            
+            System.out.println(aa.getGender());            
+            System.out.println(aa.getTP());
+            
+            aa.simpanAkun();
+            tampilData();
+            JOptionPane.showMessageDialog(null, "Tambah Data Berhasil", "Succesfull", JOptionPane.INFORMATION_MESSAGE);
+            jTabbed.setSelectedIndex(0);
+            clear();
+        }
+    }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void tbl_dataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_dataMouseClicked
+        // TODO add your handling code here:
+        try{
+            int row = tbl_data.rowAtPoint(evt.getPoint());
+            String NoRek = tbl_data.getValueAt(row, 0).toString();
+            String Nama = tbl_data.getValueAt(row, 1).toString();
+            String DoB = tbl_data.getValueAt(row, 2).toString();
+            String Alamat = tbl_data.getValueAt(row, 3).toString();
+            String Gender = tbl_data.getValueAt(row, 4).toString();
+            String Username = tbl_data.getValueAt(row, 5).toString();
+            String Password = tbl_data.getValueAt(row, 6).toString();
+            String PIN = tbl_data.getValueAt(row, 7).toString();
+            String Saldo = tbl_data.getValueAt(row, 8).toString();
+            String TP = tbl_data.getValueAt(row, 9).toString();
+            
+            txt_noRek.setText(String.valueOf(NoRek));
+            txt_nama.setText(String.valueOf(Nama));
+            txt_DoB.setText(String.valueOf(DoB));
+            txt_gender.setSelectedItem(String.valueOf(Gender));
+            txt_alamat.setText(String.valueOf(Alamat));
+            txt_user.setText(String.valueOf(Username));
+            txt_pass.setText(String.valueOf(Password));
+            txt_pin.setText(String.valueOf(PIN));
+            txt_tipeAkun.setSelectedItem((String.valueOf(TP)));
+            
+            aa.setNoRek(String.valueOf(NoRek));
+            
+            btn_edit.setEnabled(true);
+            btn_tambah.setEnabled(false);
+            
+        } catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_tbl_dataMouseClicked
+
+    private void btn_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_allActionPerformed
+        // TODO add your handling code here:
+        tampilData();
+    }//GEN-LAST:event_btn_allActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(beranda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(beranda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(beranda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(beranda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new admin().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_all;
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_tambah;
+    private javax.swing.JButton btn_transaksi1;
+    private javax.swing.JButton btn_transaksi2;
+    private javax.swing.JButton btn_transaksi3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbed;
+    private javax.swing.JLabel lbl_date;
+    private javax.swing.JLabel lbl_great1;
+    private javax.swing.JLabel lbl_great2;
+    private javax.swing.JLabel lbl_time;
+    private javax.swing.JTable tbl_data;
+    private javax.swing.JTextField txt_DoB;
+    private javax.swing.JTextField txt_alamat;
+    private javax.swing.JTextField txt_cari;
+    private javax.swing.JComboBox<String> txt_gender;
+    private javax.swing.JTextField txt_nama;
+    private javax.swing.JTextField txt_noRek;
+    private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JPasswordField txt_pin;
+    private javax.swing.JComboBox<String> txt_tipeAkun;
+    private javax.swing.JTextField txt_user;
+    // End of variables declaration//GEN-END:variables
+}
